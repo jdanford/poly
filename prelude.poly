@@ -1,0 +1,116 @@
+(module prelude
+    set!
+    (op [var expr] e
+        (set* var (eval expr e)))
+
+    fn
+    (op [pat body] e
+        (wrap (op* pat '_ body e)))
+
+    fn!
+    (op [name pat body] e
+        (set* name
+            (eval (list 'fn pat body) e)))
+
+    op!
+    (op [name pat epat body] e
+        (set* name
+            (op* pat epat body e)))
+
+    ref!
+    (op [name expr] e
+        (set* name
+            (eval (list 'ref/new expr) e)))
+
+    quote
+    (op [x] e x)
+
+    id
+    (wrap quote)
+
+    eval*
+    (wrap id)
+
+    thunk
+    (op [expr] e
+        (fn [] (eval expr e)))
+
+    current-env
+    (op () e e)
+
+    list*
+    (op l e l)
+
+    list
+    (wrap list*)
+
+    apply
+    (wrap (op [f vals] e
+              (eval (cons f vals) e)))
+
+    head
+    (fn [(h . _)] h)
+
+    tail
+    (fn [(_ . t)] t)
+
+    if
+    (op [pred then else] e
+        (match (eval pred e)
+            ([#f (eval else e)]
+             [_  (eval then e)])))
+
+    foldr
+    (fn [f a l]
+        (match l
+            ([()      a]
+             [(h . t) (f h (foldr f a t))])))
+
+    foldl
+    (fn [f a l]
+        (match l
+            ([()      a]
+             [(h . t) (foldl f (f a h) t)])))
+
+    reverse
+    (fn [l]
+        (let ([snoc (fn [t h]
+                        (cons h t))])
+            (foldl snoc () l)))
+
+    map
+    (fn [f l]
+        (let ([fcons (fn [h t]
+                         (cons (f h) t))])
+            (foldr fcons () l)))
+
+    @
+    (fn [f . args1]
+        (fn args2
+            (apply f (join args1 args2))))
+
+    inc
+    (@ + 1)
+
+    >>
+    (fn [f g]
+        (fn [x] (g (f x))))
+
+    >>>
+    (@ foldr >> id)
+
+    <<
+    (fn [g f]
+        (fn [x] (g (f x))))
+
+    <<<
+    (@ foldr << id)
+
+    println
+    (<< print-string show)
+
+    ref/update
+    (fn [r f]
+        (let ([v0 (ref/get r)]
+              [v1 (f v0)])
+            (ref/set! r v1))))

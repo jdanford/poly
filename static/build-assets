@@ -1,0 +1,5 @@
+#!/bin/sh
+DIR="$(dirname $0)"
+
+coffee -o $DIR/js/ -c $DIR/coffee/
+lessc $DIR/less/main.less $DIR/css/main.css

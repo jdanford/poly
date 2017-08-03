@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Poly REPL</title>
+
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" href="css/main.css">
+	</head>
+	<body>
+		<div id="main" class="container">
+			<h1>Poly REPL</h1>
+
+			<div class="row">
+				<div id="content" class="col-md-9">
+				    <div id="cell-area" class="well">
+				    	<div class="row">
+				    		<div class="col-md-9">
+				    			<ul id="cell-list" class="list-unstyled">
+				    			</ul>
+				    		</div>
+
+				    		<div class="col-md-3">
+				    	    </div>
+				    	</div>
+				    </div>
+				    <div id="input-area" class="well">
+				    	<h4>Enter an expression</h4>
+
+				        <div class="row">
+				        	<div class="col-md-9">
+				        	    <textarea id="input-box" class="form-control"
+				        	    	placeholder="(...)" autofocus
+				        	    	spellcheck=false rows="2"></textarea>
+				        	</div>
+
+				        	<div class="col-md-3">
+				            	<button id="submit-button" class="btn btn-primary">Evaluate</button>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div id="side" class="col-md-3">
+					<div class="well">
+						<h2>?</h2>
+					</div>
+					<div class="well">
+						<h2>?</h2>
+					</div>
+					<div class="well">
+						<h2>?</h2>
+					</div>
+			    </div>
+			</div>
+
+		<script src="js/jquery.js"></script>
+		<script src="js/underscore.js"></script>
+		<script src="js/bootstrap.js"></script>
+        <script src="js/app.js"></script>
+	</body>
+</html>

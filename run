@@ -1,0 +1,24 @@
+#!/bin/bash
+
+function run_repl() {
+    rlwrap python -m poly.repl
+}
+
+function run_server() {
+    static/build-assets
+    python -m poly.server $1
+}
+
+CMD=$1
+
+case "$CMD" in
+    "" | "repl")
+        run_repl
+        ;;
+    "server")
+        run_server $2
+        ;;
+    *)
+        echo "Unrecognized command $CMD"
+        ;;
+esac
